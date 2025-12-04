@@ -12,28 +12,33 @@
  * }
  */
 public class Solution {
-   List<int> list = new List<int>();
-   public bool IsValidBST(TreeNode root)
-   {
-       
-       dfs(root);
-       for(int i =1; i < list.Count; i++)
-       {
-           if (! (list[i-1] < list[i]))
-               return false;
+ long previousval = long.MinValue;
+  bool flag = true;
 
-       }
-       return true;
+ public bool IsValidBST(TreeNode root)
+ {
+     
+     dfs(root);
+    
+     return flag;
 
-   }
+ }
 
-   void dfs(TreeNode root)
-   {
-       if (root == null) return;
+ void dfs(TreeNode root)
+ {
+     if (root == null || flag ==false ) return;
 
-       dfs(root.left); 
-       list.Add(root.val);
-       dfs(root.right);
+     IsValidBST(root.left); 
+     if(root.val > previousval)
+     {
+         previousval = root.val;
+     }
+     else
+     {
+         flag = false;
+         return;
+     }
+     IsValidBST(root.right);
 
-   }
+ }
 }
