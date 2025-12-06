@@ -21,6 +21,8 @@ public class Solution {
             if(root.val >= low && root.val <= high) 
             {
                 sum += root.val;
+                if(root.val > high)
+                return 0;
             }
             RangeSumBST(root.right, low, high);
 
