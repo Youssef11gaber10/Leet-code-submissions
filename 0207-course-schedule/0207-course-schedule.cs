@@ -10,7 +10,7 @@ public class Solution {
         adj[row[0]].Add(row[1]);//directed
     }
     //finish adj list
-    
+
     bool[] visited = new bool[numCourses];
     bool[] currPath = new bool[numCourses];
 
@@ -48,7 +48,7 @@ bool DfsFindCycle(List<List<int>> adj, int start, bool[] visited, bool[] currPat
        // }
         //finish all its neibour dfs and not found cycle
         //when return from each one you should remove it from curr path 
-        //currPath[nei] = false;
+        currPath[nei] = false;
     }//end its neibour and no cycle 
     currPath[start] = false;
     return false;
