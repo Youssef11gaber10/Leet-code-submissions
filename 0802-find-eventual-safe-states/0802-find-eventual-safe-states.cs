@@ -1,5 +1,6 @@
 public class Solution {
  
+
  public IList<int> EventualSafeNodes(int[][] graph)
  {
      int numofnodes = graph.Length;
@@ -18,14 +19,10 @@ public class Solution {
      //finish adjacency list
      bool[] visited = new bool[numofnodes];
      bool[] curr_path = new bool[numofnodes];
-     //bool[] bad_nodes = new bool[numofnodes];
      bool[] index_result = new bool[numofnodes];
 
      for (int i = 0; i < numofnodes; i++)
      {
-
-        
-        
          if (!visited[i])
          {
              if (Dfs(adj, i, visited, curr_path,index_result) == true)//if the node i start with return with true so put in index result
@@ -70,21 +67,19 @@ public class Solution {
      {
          if (Dfs(adj, nei, visited, curr_path,  index_result) == false)
          {
+             //don't remove them from curr path leave them there cause if some one meet them will consider as cyle even from curr path or from bad nods leads to cycle
              //bad_nodes[node] = true;
              //curr_path[node] = false;//before go remove neibour from curr path//don't remove the bad nodes from curr path
+             
              return false;//if i have cycle don't continue get back 
          }
 
      }
      //if passed and have no cycle so 
-     //    visited[node]=false;
-     curr_path[node] = false;
+     curr_path[node] = false;//if was good nodes remove it from curr path and added to result
      index_result[node] = true;
      return true;
  }
-
-
-
 
 
 
