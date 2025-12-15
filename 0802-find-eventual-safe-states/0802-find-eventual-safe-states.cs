@@ -1,89 +1,88 @@
 public class Solution {
  
-public IList<int> EventualSafeNodes(int[][] graph)
-{
-    int numofnodes = graph.Length;
-    List<List<int>> adj = new List<List<int>>();
-    for (int i = 0; i < numofnodes; i++)
-        adj.Add(new List<int>());
+ public IList<int> EventualSafeNodes(int[][] graph)
+ {
+     int numofnodes = graph.Length;
+     List<List<int>> adj = new List<List<int>>();
+     for (int i = 0; i < numofnodes; i++)
+         adj.Add(new List<int>());
 
-    for (int i = 0; i < numofnodes; i++)
-    {
+     for (int i = 0; i < numofnodes; i++)
+     {
 
-        foreach (int val in graph[i])
-        {
-            adj[i].Add(val);
-        }
-    }
-    //finish adjacency list
-    bool[] visited = new bool[numofnodes];
-    bool[] curr_path = new bool[numofnodes];
-    //bool[] bad_nodes = new bool[numofnodes];
-    bool[] index_result = new bool[numofnodes];
+         foreach (int val in graph[i])
+         {
+             adj[i].Add(val);
+         }
+     }
+     //finish adjacency list
+     bool[] visited = new bool[numofnodes];
+     bool[] curr_path = new bool[numofnodes];
+     //bool[] bad_nodes = new bool[numofnodes];
+     bool[] index_result = new bool[numofnodes];
 
-    for (int i = 0; i < numofnodes; i++)
-    {
+     for (int i = 0; i < numofnodes; i++)
+     {
 
-        //if (bad_nodes[i] == true)
-        //    continue;
-        for (int j = 0; j < numofnodes; j++)
-            visited[j] = false;
+        
+        
+         if (!visited[i])
+         {
+             if (Dfs(adj, i, visited, curr_path,index_result) == true)//if the node i start with return with true so put in index result
+                 index_result[i] = true;//this node has no cycle get to terminal node
+                                        //if return false will skip it
 
-        if (!visited[i])
-        {
-            if (Dfs(adj, i, visited, curr_path) == true)//if the node i start with return with true so put in index result
-                index_result[i] = true;//this node has no cycle get to terminal node
-                                       //if return false will skip it
-
-        }
-    }
+         }
+     }
 
 
-    //after finish just loop on index result from beginnig if have any value with true 
-    //put it in list and return it 
-    List<int> result = new List<int>();
-    for (int i = 0; i < numofnodes; i++)
-    {
+     //after finish just loop on index result from beginnig if have any value with true 
+     //put it in list and return it 
+     List<int> result = new List<int>();
+     for (int i = 0; i < numofnodes; i++)
+     {
 
-        if (index_result[i] == true)
-            result.Add(i);
-    }
+         if (index_result[i] == true)
+             result.Add(i);
+     }
 
-    return result;
+     return result;
 
 
 
-}//endoffunc
+ }//endoffunc
 
 
-bool Dfs(List<List<int>> adj, int node, bool[] visited, bool[] curr_path)
-{
+ bool Dfs(List<List<int>> adj, int node, bool[] visited, bool[] curr_path, bool[] index_result)
+ {
 
-    if (curr_path[node])//so it has cycle so skip it remove it from curr path
-        return false;
+     if (curr_path[node])//so it has cycle so skip it remove it from curr path
+         return false;
 
-    if (visited[node])
-        return true;
+     if (visited[node])
+         return true;
 
-    visited[node] = true;
-    curr_path[node] = true;
+     visited[node] = true;
+     curr_path[node] = true;
 
 
-    foreach (int nei in adj[node])
-    {
-        if (Dfs(adj, nei, visited, curr_path) == false)
-        {
-            //bad_nodes[node] = true;
-            //curr_path[node] = false;//before go remove neibour from curr path//don't remove the bad nodes from curr path
-            return false;//if i have cycle don't continue get back 
-        }
+     foreach (int nei in adj[node])
+     {
+         if (Dfs(adj, nei, visited, curr_path,  index_result) == false)
+         {
+             //bad_nodes[node] = true;
+             //curr_path[node] = false;//before go remove neibour from curr path//don't remove the bad nodes from curr path
+             return false;//if i have cycle don't continue get back 
+         }
 
-    }
-    //if passed and have no cycle so 
-    //    visited[node]=false;
-    curr_path[node] = false;
-    return true;
-}
+     }
+     //if passed and have no cycle so 
+     //    visited[node]=false;
+     curr_path[node] = false;
+     index_result[node] = true;
+     return true;
+ }
+
 
 
 
