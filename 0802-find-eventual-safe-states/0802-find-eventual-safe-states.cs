@@ -1,7 +1,6 @@
 public class Solution {
- 
+   
 
- 
        public IList<int> EventualSafeNodes(int[][] graph)
 {
    int numofnodes = graph.Length;
@@ -82,9 +81,5 @@ bool Dfs(List<List<int>> adj, int node, bool[] visited, bool[] curr_path, bool[]
    index_result[node] = true;
    return true;
 }
-
-
-
-
 
 }
