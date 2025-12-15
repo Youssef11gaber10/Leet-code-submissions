@@ -23,6 +23,8 @@ public class Solution {
 
      for (int i = 0; i < numofnodes; i++)
      {
+       if (curr_path[i] == true)
+     continue;
          if (!visited[i])
          {
              if (Dfs(adj, i, visited, curr_path,index_result) == true)//if the node i start with return with true so put in index result
@@ -57,7 +59,7 @@ public class Solution {
          return false;
 
      if (visited[node])
-        return index_result[node];
+         return true;
 
      visited[node] = true;
      curr_path[node] = true;
