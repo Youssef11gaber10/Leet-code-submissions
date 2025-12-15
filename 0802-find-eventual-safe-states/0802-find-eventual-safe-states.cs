@@ -57,7 +57,7 @@ public class Solution {
          return false;
 
      if (visited[node])
-         return true;
+        return index_result[node];
 
      visited[node] = true;
      curr_path[node] = true;
