@@ -19,19 +19,14 @@ public IList<int> EventualSafeNodes(int[][] graph)
    //finish adjacency list
    bool[] visited = new bool[numofnodes];
    bool[] curr_path = new bool[numofnodes];
-   List<int> bad_nodes = new List<int>();
+   bool[] bad_nodes = new bool[numofnodes];
    bool[] index_result = new bool[numofnodes];
 
    for (int i = 0; i < numofnodes; i++)
    {
-foreach (int val in bad_nodes)
-    {
-     if (i == val)
-         continue;
-     else
-         break;
 
- }
+       if (bad_nodes[i] == true)
+            continue;
        for (int j = 0; j < numofnodes; j++)
            visited[j] = false;
 
@@ -62,7 +57,7 @@ foreach (int val in bad_nodes)
 }//endoffunc
 
 
-bool Dfs(List<List<int>> adj, int node, bool[] visited, bool[] curr_path, List<int> bad_nodes)
+bool Dfs(List<List<int>> adj, int node, bool[] visited, bool[] curr_path, bool[] bad_nodes)
 {
 
    if (curr_path[node])//so it has cycle so skip it remove it from curr path
@@ -79,7 +74,7 @@ bool Dfs(List<List<int>> adj, int node, bool[] visited, bool[] curr_path, List<i
    {
        if (Dfs(adj, nei, visited, curr_path, bad_nodes) == false)
        {
-           bad_nodes.Add(node);
+           bad_nodes[node]=true;
            curr_path[node] = false;//before go remove neibour from curr path
            return false;//if i have cycle don't continue get back 
        }
