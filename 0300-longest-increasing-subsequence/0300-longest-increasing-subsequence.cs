@@ -24,7 +24,7 @@ public class Solution {
            result[i] = max_subseq + 1;
        }
 
-       int max = 0;//to get the max value of the dp
+       int max = 1;//to get the max value of the dp at least one element will be 1
        for(int i = 1;i < result.Length; i++)
            if (result[i] > max)
                max = result[i];
