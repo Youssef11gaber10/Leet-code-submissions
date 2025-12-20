@@ -1,16 +1,17 @@
 public class Solution {
 
-      Dictionary<int, int> dict = new Dictionary<int, int>();
-      public int ClimbStairs(int n)
-      {
-          if (n <= 1)
-              return 1;
-          if(dict.ContainsKey(n)) //dict exist
-          {
-              return dict[n];
-          }//if not exist i should preserve its value after compute it
-          int result = ClimbStairs(n - 1) + ClimbStairs(n - 2);
-          dict[n] = result;//preserve its value
-          return result;
-      }
+public int ClimbStairs(int n)
+{
+
+    int[] dp = new int[n+1];
+    dp[0] = 1;
+    dp[1] = 1;
+    for (int i = 2; i <= n; i++)
+    {
+        dp[i] = dp[i - 1] + dp[i - 2];
+    }
+
+    return dp[n];
+}
+
 }
