@@ -1,43 +1,61 @@
 public class Solution {
 
-    public bool CheckInclusion(string s1, string s2)
+
+    public bool CheckInclusion(string s1, string s2) 
     {
         if (s1.Length > s2.Length)
             return false;
-
-        Dictionary<char, int> map1 = new Dictionary<char, int>();
         
+        // اعمل frequency map لـ s1
+        Dictionary<char, int> s1Map = new Dictionary<char, int>();
         foreach (char c in s1)
         {
-            if (map1.ContainsKey(c))
-                map1[c]++;
+            if (s1Map.ContainsKey(c))
+                s1Map[c]++;
             else
-                map1[c] = 1;
+                s1Map[c] = 1;
         }
         
-        int windowSize = s1.Length;
-        
-        for (int i = 0; i <= s2.Length - windowSize; i++)
+        // اعمل frequency map للنافذة الأولى
+        Dictionary<char, int> windowMap = new Dictionary<char, int>();
+        for (int i = 0; i < s1.Length; i++)
         {
-            Dictionary<char, int> map2 = new Dictionary<char, int>();
+            char c = s2[i];
+            if (windowMap.ContainsKey(c))
+                windowMap[c]++;
+            else
+                windowMap[c] = 1;
+        }
+        
+        // قارن النافذة الأولى
+        if (AreMapsEqual(s1Map, windowMap))
+            return true;
+        
+        // حرّك النافذة
+        for (int i = s1.Length; i < s2.Length; i++)
+        {
+            // أضف الحرف الجديد (اللي داخل)
+            char newChar = s2[i];
+            if (windowMap.ContainsKey(newChar))
+                windowMap[newChar]++;
+            else
+                windowMap[newChar] = 1;
             
-            for (int j = i; j < i + windowSize; j++)
-            {
-                char c = s2[j];
-                if (map2.ContainsKey(c))
-                    map2[c]++;
-                else
-                    map2[c] = 1;
-            }
+            // احذف الحرف القديم (اللي خارج)
+            char oldChar = s2[i - s1.Length];
+            windowMap[oldChar]--;
+            if (windowMap[oldChar] == 0)
+                windowMap.Remove(oldChar);
             
-            if (AreDictionariesEqual(map1, map2))
+            // قارن
+            if (AreMapsEqual(s1Map, windowMap))
                 return true;
         }
         
         return false;
     }
     
-    private bool AreDictionariesEqual(Dictionary<char, int> map1, Dictionary<char, int> map2)
+    private bool AreMapsEqual(Dictionary<char, int> map1, Dictionary<char, int> map2)
     {
         if (map1.Count != map2.Count)
             return false;
