@@ -6,7 +6,6 @@ public class Solution {
         if (s1.Length > s2.Length)
             return false;
         
-        // اعمل frequency map لـ s1
         Dictionary<char, int> s1Map = new Dictionary<char, int>();
         foreach (char c in s1)
         {
@@ -16,7 +15,6 @@ public class Solution {
                 s1Map[c] = 1;
         }
         
-        // اعمل frequency map للنافذة الأولى
         Dictionary<char, int> windowMap = new Dictionary<char, int>();
         for (int i = 0; i < s1.Length; i++)
         {
@@ -27,21 +25,17 @@ public class Solution {
                 windowMap[c] = 1;
         }
         
-        // قارن النافذة الأولى
         if (AreMapsEqual(s1Map, windowMap))
             return true;
         
-        // حرّك النافذة
         for (int i = s1.Length; i < s2.Length; i++)
         {
-            // أضف الحرف الجديد (اللي داخل)
             char newChar = s2[i];
             if (windowMap.ContainsKey(newChar))
                 windowMap[newChar]++;
             else
                 windowMap[newChar] = 1;
             
-            // احذف الحرف القديم (اللي خارج)
             char oldChar = s2[i - s1.Length];
             windowMap[oldChar]--;
             if (windowMap[oldChar] == 0)
